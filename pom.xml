@@ -67,7 +67,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                ni.edu.uam.evaluacionpracticaic/ni.edu.uam.evaluacionpracticaic.HelloApplication
+                                ni.edu.uam.evaluacionpracticaic/ni.edu.uam.evaluacionpracticaic.app.EmpleadoApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
