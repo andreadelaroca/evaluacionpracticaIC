@@ -1,4 +1,4 @@
-package ni.edu.uam.evaluacionpracticaic;
+package ni.edu.uam.evaluacionpracticaic.controller;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
