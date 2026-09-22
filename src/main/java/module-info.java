@@ -1,6 +1,7 @@
 module ni.edu.uam.evaluacionpracticaic {
     requires javafx.controls;
     requires javafx.fxml;
+    requires static lombok;
 
 
     opens ni.edu.uam.evaluacionpracticaic to javafx.fxml;
