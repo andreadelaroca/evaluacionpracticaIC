@@ -40,12 +40,31 @@ public class Formulario2Controller implements Initializable {
     private TableColumn<Empleado, Double> colSalario;
 
     @FXML
-    private Button btnVolver;
+    private Button btnRegresar;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        configurarColumnas();
-        cargarEmpleados();
+        colNombres.setCellValueFactory(new PropertyValueFactory<>("nombres"));
+        colApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
+        colCargo.setCellValueFactory(new PropertyValueFactory<>("cargo"));
+        colSalario.setCellValueFactory(new PropertyValueFactory<>("salario"));
+
+        tblEmpleados.setItems(EmpleadoData.getInstance().getListaEmpleados());
+        tblEmpleados.setPlaceholder(new Label("No hay empleados registrados"));
+
+        btnRegresar.setOnAction(this::regresar);
+    }
+
+    private void regresar(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/ni/edu/uam/evaluacionpracticaic/view/Formulario1.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void configurarColumnas() {

@@ -5,6 +5,6 @@ import ni.edu.uam.evaluacionpracticaic.app.EmpleadoApplication;
 
 public class Launcher {
     public static void main(String[] args) {
-        Application.launch(EmpleadoApplication.class, args);
+        EmpleadoApplication.launch(EmpleadoApplication.class, args);
     }
 }

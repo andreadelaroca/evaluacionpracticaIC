@@ -1,4 +1,4 @@
-package ni.edu.uam.empleados.util;
+package ni.edu.uam.evaluacionpracticaic.util;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,7 +22,7 @@ public class NavigationManager {
             stage.show();
 
         } catch (IOException e) {
-            AlertHelper.error(
+            ni.edu.uam.empleados.util.AlertHelper.error(
                     "Error",
                     "No se pudo abrir la ventana."
             );

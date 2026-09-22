@@ -1,6 +1,9 @@
-package ni.edu.uam.evaluacionpracticaic;
+package ni.edu.uam.evaluacionpracticaic.controller;
 
+import static ni.edu.uam.evaluacionpracticaic.util.NavigationManager.*;
 
+import ni.edu.uam.evaluacionpracticaic.data.EmpleadoData;
+import ni.edu.uam.evaluacionpracticaic.model.Empleado;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -92,8 +95,12 @@ public class Formulario1Controller implements Initializable {
             return;
         }
 
+        // Guardar en la lista compartida
+        Empleado empleado = new Empleado(nombres, apellidos, cargo, salario);
+        EmpleadoData.getInstance().getListaEmpleados().add(empleado);
+
         // Proceso de guardado exitoso
-        lblMensaje.setStyle("-fx-text-fill: #28a745; -fx-font-weight: bold;"); // Cambia a verde
+        lblMensaje.setStyle("-fx-text-fill: #28a745; -fx-font-weight: bold;");
         lblMensaje.setText("¡Empleado " + nombres + " registrado con éxito!");
 
         limpiarCampos();
@@ -113,17 +120,22 @@ public class Formulario1Controller implements Initializable {
     }
 
     private void verListado(ActionEvent event) {
+        URL url = getClass().getResource("/ni/edu/uam/evaluacionpracticaic/view/Formulario2.fxml");
+
+        if (url == null) {
+            mostrarAlerta("Error de Navegación", "No se encontró el archivo Formulario2.fxml.", Alert.AlertType.ERROR);
+            return;
+        }
+
         try {
-            // Asegúrate de que la ruta corresponda a la ubicación real de tu vista
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistas/FormularioListado.fxml"));
+            FXMLLoader loader = new FXMLLoader(url);
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
-
-        } catch (IOException | NullPointerException e) {
-            mostrarAlerta("Error de Navegación", "No se encontró el archivo FXML del listado.", Alert.AlertType.ERROR);
+        } catch (IOException e) {
+            mostrarAlerta("Error de Navegación", "No se pudo cargar el listado.", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }
