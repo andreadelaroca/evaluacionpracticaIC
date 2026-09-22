@@ -5,4 +5,4 @@ EQUIPO 3 REPOSITORIO EXAMEN 1:
 -Nazario Escoto Largaespada
 
 
-casp: Desarrp;e ima app para registrar empleados con dos formularios
+casp: Desarrolle ima app para registrar empleados con dos formularios
