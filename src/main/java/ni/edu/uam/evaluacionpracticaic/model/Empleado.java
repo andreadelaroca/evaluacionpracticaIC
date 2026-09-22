@@ -7,12 +7,12 @@ import lombok.*;
 @AllArgsConstructor
 public class Empleado {
 
-    private String nombre;
+    private String nombres;
     private String apellidos;
     private String cargo;
     private double salario;
 
     public String getNombreCompleto() {
-        return nombre + " " + apellidos;
+        return nombres + " " + apellidos;
     }
 }

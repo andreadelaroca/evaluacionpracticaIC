@@ -1,6 +1,9 @@
 package ni.edu.uam.evaluacionpracticaic.controller;
 
 import static ni.edu.uam.evaluacionpracticaic.util.NavigationManager.*;
+
+import ni.edu.uam.evaluacionpracticaic.data.EmpleadoData;
+import ni.edu.uam.evaluacionpracticaic.model.Empleado;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -92,8 +95,12 @@ public class Formulario1Controller implements Initializable {
             return;
         }
 
+        // Guardar en la lista compartida
+        Empleado empleado = new Empleado(nombres, apellidos, cargo, salario);
+        EmpleadoData.getInstance().getListaEmpleados().add(empleado);
+
         // Proceso de guardado exitoso
-        lblMensaje.setStyle("-fx-text-fill: #28a745; -fx-font-weight: bold;"); // Cambia a verde
+        lblMensaje.setStyle("-fx-text-fill: #28a745; -fx-font-weight: bold;");
         lblMensaje.setText("¡Empleado " + nombres + " registrado con éxito!");
 
         limpiarCampos();
