@@ -1,5 +1,6 @@
 package ni.edu.uam.evaluacionpracticaic;
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -19,25 +21,23 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Formulario1Controller {
+public class Formulario1Controller implements Initializable {
 
-
-    // Componentes de la interfaz
+    // Identificadores exactos definidos en tu archivo FXML
     @FXML private TextField txtNombres;
     @FXML private TextField txtApellidos;
-    @FXML private ComboBox<String> cmbCargo;
+    @FXML private ComboBox<String> cbxCargo;
     @FXML private TextField txtSalario;
 
     @FXML private Button btnGuardar;
     @FXML private Button btnLimpiar;
     @FXML private Button btnVerListado;
 
-    /**
-     * Se ejecuta al cargar el formulario para inicializar componentes
-     */
+    @FXML private Label lblMensaje;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Llenar el ComboBox de Cargo con opciones iniciales
+        // 1. Cargar opciones en el ComboBox
         ObservableList<String> cargos = FXCollections.observableArrayList(
                 "Desarrollador Junior",
                 "Desarrollador Senior",
@@ -45,26 +45,30 @@ public class Formulario1Controller {
                 "Gerente de Proyecto",
                 "Soporte Técnico"
         );
-        cmbCargo.setItems(cargos);
+        cbxCargo.setItems(cargos);
+
+        // 2. Asignar los eventos a los botones dinámicamente
+        btnGuardar.setOnAction(this::guardarEmpleado);
+        btnLimpiar.setOnAction(this::limpiarFormulario);
+        btnVerListado.setOnAction(this::verListado);
     }
 
-    /**
-     * Acción del botón "Guardar"
-     */
-    @FXML
-    void guardarEmpleado(ActionEvent event) {
+    private void guardarEmpleado(ActionEvent event) {
+        // Reiniciar el mensaje inferior
+        lblMensaje.setText("");
+
         String nombres = txtNombres.getText().trim();
         String apellidos = txtApellidos.getText().trim();
-        String cargo = cmbCargo.getValue();
+        String cargo = cbxCargo.getValue();
         String salarioStr = txtSalario.getText().trim();
 
-        // 1. Validación de campos vacíos
+        // Validación de campos vacíos
         if (nombres.isEmpty() || apellidos.isEmpty() || cargo == null || salarioStr.isEmpty()) {
-            mostrarAlerta("Error de Validación", "Todos los campos son obligatorios. Seleccione un cargo.", Alert.AlertType.ERROR);
+            mostrarAlerta("Error de Validación", "Todos los campos son obligatorios.", Alert.AlertType.ERROR);
             return;
         }
 
-        // 2. Validación de formato (solo letras y espacios para nombres y apellidos)
+        // Validación de solo letras para nombres y apellidos
         if (!nombres.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
             mostrarAlerta("Error de Validación", "Los nombres solo deben contener letras.", Alert.AlertType.ERROR);
             return;
@@ -75,8 +79,8 @@ public class Formulario1Controller {
             return;
         }
 
-        // 3. Validación del salario
-        double salario = 0.0;
+        // Validación numérica del salario
+        double salario;
         try {
             salario = Double.parseDouble(salarioStr);
             if (salario <= 0) {
@@ -84,59 +88,46 @@ public class Formulario1Controller {
                 return;
             }
         } catch (NumberFormatException e) {
-            mostrarAlerta("Error de Validación", "Ingrese un valor numérico válido para el salario.", Alert.AlertType.ERROR);
+            mostrarAlerta("Error de Validación", "Formato numérico inválido para el salario.", Alert.AlertType.ERROR);
             return;
         }
 
-        // Proceso de guardado
-        System.out.println("Empleado guardado: " + nombres + " " + apellidos + " | " + cargo + " | $" + salario);
-        mostrarAlerta("Éxito", "Empleado registrado correctamente.", Alert.AlertType.INFORMATION);
+        // Proceso de guardado exitoso
+        lblMensaje.setStyle("-fx-text-fill: #28a745; -fx-font-weight: bold;"); // Cambia a verde
+        lblMensaje.setText("¡Empleado " + nombres + " registrado con éxito!");
 
-        limpiarFormulario();
+        limpiarCampos();
     }
 
-    /**
-     * Acción del botón "Limpiar"
-     */
-    @FXML
-    void limpiarAccion(ActionEvent event) {
-        limpiarFormulario();
+    private void limpiarFormulario(ActionEvent event) {
+        limpiarCampos();
+        lblMensaje.setText(""); // Limpia también el mensaje de éxito/error
     }
 
-    /**
-     * Acción del botón "Ver Listado" (Navegación)
-     */
-    @FXML
-    void verListado(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FormularioListado.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException e) {
-            mostrarAlerta("Error de Navegación", "No se pudo cargar la vista del listado.", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Método auxiliar para restablecer la vista
-     */
-    private void limpiarFormulario() {
+    private void limpiarCampos() {
         txtNombres.clear();
         txtApellidos.clear();
-        cmbCargo.getSelectionModel().clearSelection();
+        cbxCargo.getSelectionModel().clearSelection();
         txtSalario.clear();
         txtNombres.requestFocus();
     }
 
-    /**
-     * Método auxiliar para alertas
-     */
+    private void verListado(ActionEvent event) {
+        try {
+            // Asegúrate de que la ruta corresponda a la ubicación real de tu vista
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistas/FormularioListado.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException | NullPointerException e) {
+            mostrarAlerta("Error de Navegación", "No se encontró el archivo FXML del listado.", Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
         Alert alerta = new Alert(tipo);
         alerta.setTitle(titulo);

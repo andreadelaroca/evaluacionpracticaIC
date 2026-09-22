@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" spacing="15.0" style="-fx-border-color: #cccccc; -fx-border-radius: 5;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.Formulario1Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" spacing="15.0" style="-fx-border-color: #cccccc; -fx-border-radius: 5;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ni.edu.uam.evaluacionpracticaic.Formulario1Controller">
     <children>
         <Label prefHeight="35.0" prefWidth="263.0" text="Registrar Empleado" textFill="#0066cc">
             <font>
