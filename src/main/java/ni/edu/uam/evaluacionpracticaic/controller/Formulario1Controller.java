@@ -1,4 +1,4 @@
-package ni.edu.uam.evaluacionpracticaic;
+package ni.edu.uam.evaluacionpracticaic.controller;
 
 
 import javafx.collections.FXCollections;
@@ -115,7 +115,7 @@ public class Formulario1Controller implements Initializable {
     private void verListado(ActionEvent event) {
         try {
             // Asegúrate de que la ruta corresponda a la ubicación real de tu vista
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistas/FormularioListado.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ni/edu/uam/casopracticoic/view/Formulario2.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
